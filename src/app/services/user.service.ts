@@ -23,6 +23,15 @@ export class UserService {
     return data;
   }
 
+  searchByName(name: string, sortFn?: (a: User, b: User) => number): User[] {
+
+    if (!name) {
+      return this.listUsers(sortFn);
+    }
+
+    return this.users.filter(x => x.name.toLowerCase().includes(name.toLowerCase()) == true).sort(sortFn);
+  }
+
   private rawDataUserMapper(obj: any) : User {
     return {
       name: obj.name,

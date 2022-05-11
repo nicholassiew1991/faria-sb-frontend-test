@@ -16,7 +16,7 @@ export class UsersTableComponent implements OnInit {
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
-    this.dataSource = this.userService.listUsers((a, b) => a.name.localeCompare(b.name));
+    this.dataSource = this.userService.listUsers(this.getSortFunction());
   }
 
   sort(clickColumn: string) {
@@ -31,6 +31,11 @@ export class UsersTableComponent implements OnInit {
     this.sortDirection = this.sortDirection == 'asc' ? 'desc' : 'asc';
 
     this.dataSource.sort(this.getSortFunction())
+  }
+
+  search(event: Event) {
+    let value = (event.target as HTMLInputElement).value;
+    this.dataSource = this.userService.searchByName(value, this.getSortFunction());
   }
 
   private getSortFunction(): (a: User, b: User) => number {

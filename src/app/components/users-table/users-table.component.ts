@@ -24,7 +24,6 @@ export class UsersTableComponent implements OnInit {
     if (clickColumn != this.sortProperty) {
       this.sortProperty = clickColumn;
       this.sortDirection = 'asc';
-      console.log(this.sortProperty, this.sortDirection);
       return;
     }
 
@@ -36,6 +35,10 @@ export class UsersTableComponent implements OnInit {
   search(event: Event) {
     let value = (event.target as HTMLInputElement).value;
     this.dataSource = this.userService.searchByName(value, this.getSortFunction());
+  }
+
+  resetBalance() {
+    this.dataSource.forEach(x => x.balance = 0);
   }
 
   private getSortFunction(): (a: User, b: User) => number {

@@ -13,6 +13,16 @@ export class UserService {
     this.users = (UsersJson as []).map(x => this.rawDataUserMapper(x));
   }
 
+  listUsers(sortFn?: (a: User, b: User) => number): User[] {
+    let data = this.users;
+
+    if (sortFn) {
+      data = data.sort(sortFn);
+    }
+
+    return data;
+  }
+
   private rawDataUserMapper(obj: any) : User {
     return {
       name: obj.name,

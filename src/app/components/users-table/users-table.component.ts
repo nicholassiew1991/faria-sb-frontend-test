@@ -24,6 +24,7 @@ export class UsersTableComponent implements OnInit {
     if (clickColumn != this.sortProperty) {
       this.sortProperty = clickColumn;
       this.sortDirection = 'asc';
+      this.dataSource.sort(this.getSortFunction());
       return;
     }
 

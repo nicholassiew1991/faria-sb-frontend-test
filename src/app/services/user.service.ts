@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { User } from 'src/app/models/user';
 import UsersJson from '../../assets/users.json';
 
+type JsonUser = (typeof UsersJson)[number];
+
 @Injectable({
   providedIn: 'root'
 })
@@ -10,7 +12,7 @@ export class UserService {
   private users: User[] = []
 
   constructor() {
-    this.users = (UsersJson as []).map(x => this.rawDataUserMapper(x));
+    this.users = (UsersJson as JsonUser[]).map(x => this.rawDataUserMapper(x));
   }
 
   listUsers(sortFn?: (a: User, b: User) => number): User[] {
@@ -32,7 +34,7 @@ export class UserService {
     return this.users.filter(x => x.name.toLowerCase().includes(name.toLowerCase()) == true).sort(sortFn);
   }
 
-  private rawDataUserMapper(obj: any) : User {
+  private rawDataUserMapper(obj: JsonUser) : User {
     return {
       name: obj.name,
       age: obj.age,
